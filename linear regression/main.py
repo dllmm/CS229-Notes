@@ -3,13 +3,10 @@ import csv
 def read_file(file_path, tzsf):
     cf = csv.reader(open(file_path,'r'))
     dt = list(cf)
-    for i in range(len(dt))[::-1]:
-        if dt[i][3] == "State":
-            del dt[i]
-    x_train = np.column_stack((np.ones([len(dt), 1], dtype=np.float), np.array(dt)[:, :3].astype(float)))
-    x_tzsf = np.column_stack((np.ones([len(dt), 1], dtype=np.float), np.array(dt)[:, :3].astype(float)/tzsf))
-    y_train = np.array(dt)[:,-1:].astype(float)
-    y_tzsf = np.array(dt)[:,-1:].astype(float)/tzsf
+    x_train = np.column_stack((np.ones([len(dt) - 1, 1], dtype=np.float), np.array(dt)[1:, :3].astype(float)))
+    x_tzsf = np.column_stack((np.ones([len(dt) - 1, 1], dtype=np.float), np.array(dt)[1:, :3].astype(float)/tzsf))
+    y_train = np.array(dt)[1:,-1:].astype(float)
+    y_tzsf = np.array(dt)[1:,-1:].astype(float)/tzsf
     return x_train,y_train,x_tzsf, y_tzsf
 def loss_gd(x_train,y_train,tzsf):
     lear_rate = 0.2
