@@ -8,8 +8,7 @@ def read_file(file_path, tzsf):
     y_train = np.array(dt)[1:,-1:].astype(float)
     y_tzsf = np.array(dt)[1:,-1:].astype(float)/tzsf
     return x_train,y_train,x_tzsf, y_tzsf
-def loss_gd(x_train,y_train,tzsf):
-    lear_rate = 0.2
+def loss_gd(x_train,y_train,tzsf,lear_rate):
     para = np.zeros([len(x_train[0]),1],dtype=np.float)
     ls = 1/2/len(x_train)*(
         np.matmul(np.transpose(np.matmul(x_train,para) - y_train),np.matmul(x_train,para) - y_train)[0][0])
@@ -27,7 +26,7 @@ def loss_ne(x,y):
                 np.matmul(np.transpose(np.matmul(x, np.matmul(np.matmul(np.linalg.inv(np.matmul(np.transpose(x),x)),np.transpose(x)),y)) - y), np.matmul(x, np.matmul(np.matmul(np.linalg.inv(np.matmul(np.transpose(x),x)),np.transpose(x)),y)) - y)[0][0])
 if __name__ == '__main__':
     x,y,x_tzsf,y_tzsf = read_file('50_Startups.csv',100000)
-    p_gd,l_gd = loss_gd(x_tzsf,y_tzsf,100000)
+    p_gd,l_gd = loss_gd(x_tzsf,y_tzsf,100000,0.2)
     p_ne, l_ne = loss_ne(x, y)
     print('gd min loss:')
     print(l_gd)
