@@ -36,7 +36,7 @@ def loss(x, y, p):
         if y[i] == 1.:
             ls += -1 * log(sigmod(np.matmul(x[i], p)))
         else:
-            ls += -1 * log(sigmod(np.ones([1,1]) - np.matmul(x[i], p)))
+            ls += -1 * log(1 - sigmod(np.matmul(x[i], p)))
     return ls/m
 def gd(x_train,y_train,lear_rate):
     para = np.ones([len(x_train[0]), 1], dtype=np.float)
